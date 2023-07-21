@@ -7,5 +7,7 @@ int main() {
     item1.setName("Biscotti");
     item1.setQuantity(3);
     item1.show();
+    Item item2(item1);
+    item2.show();
     return 0;
 }

@@ -12,6 +12,10 @@ public:
     Item(const std::string& Name, int Quantity = 1);
     ~Item();
 
+    //copy constructor and assignment operator
+    Item(const Item& original);
+    Item& operator=(const Item& right);
+
     //getter and setter method
     const std::string& getName() const;
     int getQuantity() const;
