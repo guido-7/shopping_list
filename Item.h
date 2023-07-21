@@ -9,13 +9,20 @@
 
 class Item {
 public:
-    Item(const std::string& n);
+    Item(const std::string& Name, int Quantity = 1);
     ~Item();
 
+    //getter and setter method
+    const std::string& getName() const;
+    int getQuantity() const;
+    void setName(const std::string& Name);
+    void setQuantity(int Quantity);
+
+    //print all variables
     void show();
 private:
     std::string name;
+    int quantity;
 };
-
 
 #endif //SHOPPING_LIST_ITEM_H
