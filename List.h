@@ -14,10 +14,11 @@ public:
     List();
     ~List();
 
-    void add(const std::string& name, int quantity = 1);
+    void add(const std::string& name, int quantity = 1, bool taken = false);
     void remove(const std::string& name);
     void changeQuantityItem(const std::string& name, int quantity);
     void changeNameItem(const std::string& oldName, const std::string& newName);
+    void changeTakenItem(const std::string& name);
     void show();
 
 private:

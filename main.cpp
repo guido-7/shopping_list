@@ -26,6 +26,10 @@ int main() {
     list1.changeNameItem("Fusillli","Fusilli");
     list1.remove("Mezze maniche");
     list1.show();
+    list1.add("Mezze maniche",4, true);
+    list1.changeTakenItem("Maniche");
+    list1.show();
+
 
 
     return 0;

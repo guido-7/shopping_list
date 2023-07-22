@@ -12,7 +12,7 @@ List::~List() {
     items.clear();
 }
 
-void List::add(const std::string& name, int quantity) {
+void List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
         return;
@@ -23,7 +23,7 @@ void List::add(const std::string& name, int quantity) {
             return;
         }
     }
-    items.push_back(new Item(name, quantity));
+    items.push_back(new Item(name, quantity, taken));
     std::cout << "Item added successfully" <<std::endl;
 }
 
@@ -66,6 +66,20 @@ void List::changeNameItem(const std::string& oldName, const std::string& newName
         }
     }
     std::cout << "Name not updated. Item not find" <<std::endl;
+}
+
+void List::changeTakenItem(const std::string &name) {
+    for(auto i : items){
+        if(name == i->getName()){
+            if(i->isTaken())
+                i->setTaken(false);
+            else
+                i->setTaken(true);
+            std::cout << "Taken updated" <<std::endl;
+            return;
+        }
+    }
+    std::cout << "Item not find" <<std::endl;
 }
 
 void List::show() {
