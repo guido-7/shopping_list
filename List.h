@@ -14,6 +14,9 @@ public:
     List(const std::string& name);
     ~List();
 
+    const std::string &getNameList() const;
+    void setNameList(const std::string& NameList);
+
     void add(const std::string& name, int quantity = 1, bool taken = false);
     void remove(const std::string& name);
     void changeQuantityItem(const std::string& name, int quantity);

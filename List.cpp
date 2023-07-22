@@ -12,6 +12,14 @@ List::~List() {
     items.clear();
 }
 
+const std::string &List::getNameList() const {
+    return nameList;
+}
+
+void List::setNameList(const std::string& NameList) {
+    List::nameList = NameList;
+}
+
 void List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
