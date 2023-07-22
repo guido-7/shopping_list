@@ -11,7 +11,7 @@
 
 class List {
 public:
-    List();
+    List(const std::string& name);
     ~List();
 
     void add(const std::string& name, int quantity = 1, bool taken = false);
@@ -23,6 +23,7 @@ public:
 
 private:
     std::list<Item*> items;
+    std::string nameList;
 };
 
 

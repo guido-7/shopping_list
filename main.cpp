@@ -14,7 +14,7 @@ int main() {
     item2.show();
     */
 
-    List list1;
+    List list1("Lista della spesa");
     list1.add("Fusilli",2);
     list1.add("Mezze maniche",2);
     list1.add("Eliche",2);
@@ -29,8 +29,6 @@ int main() {
     list1.add("Mezze maniche",4, true);
     list1.changeTakenItem("Maniche");
     list1.show();
-
-
 
     return 0;
 }

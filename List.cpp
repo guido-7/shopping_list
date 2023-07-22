@@ -4,7 +4,7 @@
 
 #include "List.h"
 
-List::List() {
+List::List(const std::string& name) : nameList(name) {
     items.clear();
 }
 
