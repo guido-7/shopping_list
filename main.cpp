@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Item.h"
+#include "List.h"
 
 int main() {
     Item item1("Biscottti");
@@ -9,5 +10,11 @@ int main() {
     item1.show();
     Item item2(item1);
     item2.show();
+
+    List list1;
+    list1.add("Fusilli",2);
+    list1.add("Mezze maniche",2);
+    list1.add("Eliche",2);
+    list1.show();
     return 0;
 }
