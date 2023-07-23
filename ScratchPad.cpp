@@ -6,6 +6,7 @@
 
 ScratchPad::ScratchPad() {
     lists.clear();
+    indexListOpen = 0;
 }
 
 ScratchPad::~ScratchPad() {
@@ -14,6 +15,7 @@ ScratchPad::~ScratchPad() {
 
 void ScratchPad::addList(const std::string& Name) {
     lists.push_back(new List(Name));
+    indexListOpen = lists.size() + 1;
 }
 
 void ScratchPad::removeList(const std::string &Name) {
@@ -22,6 +24,7 @@ void ScratchPad::removeList(const std::string &Name) {
         if(Name == i->getNameList()){
             lists.erase(lists.begin() + j);
             std::cout << "List removed successfully" << std::endl;
+            indexListOpen = lists.size() + 1;
             return;
         }
         else
@@ -35,6 +38,7 @@ void ScratchPad::removeList(int Index) {
     if(Index > 0 && Index < lists.size()) {
         lists.erase(lists.begin() + Index);
         std::cout << "List removed successfully" << std::endl;
+        indexListOpen = lists.size() + 1;
         return;
     }
     std::cout << "Invalid index" <<std::endl;
@@ -46,4 +50,24 @@ void ScratchPad::showLists() const {
         j++;
         std::cout << j << ") " << i->getNameList() << std::endl;
     }
+}
+
+void ScratchPad::showItems() const {
+    if(indexListOpen < lists.size()){
+        lists[indexListOpen]->show();
+        return;
+    }
+    std::cout << "List not selected" << std::endl;
+}
+
+int ScratchPad::getIndexListOpen() const {
+    return indexListOpen;
+}
+
+void ScratchPad::setIndexListOpen(int indexListOpen) {
+    ScratchPad::indexListOpen = indexListOpen;
+}
+
+int ScratchPad::size() {
+    return lists.size();
 }

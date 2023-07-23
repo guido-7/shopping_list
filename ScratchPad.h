@@ -18,8 +18,15 @@ public:
     void removeList(const std::string& Name);
     void removeList(int N);
     void showLists() const;
+    void showItems() const;
+
+    int getIndexListOpen() const;
+    void setIndexListOpen(int indexListOpen);
+    int size();
+
 private:
     std::vector<List*> lists;
+    int indexListOpen;
 };
 
 

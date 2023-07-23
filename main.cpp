@@ -3,6 +3,73 @@
 #include "List.h"
 #include "ScratchPad.h"
 
+// enum class
+enum class ListEvent {
+    Quit, Back, Open, New, Remove,Null
+};
+
+// poll event from keyboard
+ListEvent getEvent() {
+    char c;
+    while (std::cin.get(c)) {
+        std::cin.ignore(100, '\n');
+        switch (c) {
+            case 'Q':
+                return ListEvent::Quit;
+            case 'b':
+                return ListEvent::Back;
+            case 'o':
+                return ListEvent::Open;
+            case 'n':
+                return ListEvent::New;
+            case 'r':
+                return ListEvent::Remove;
+            default:
+                return ListEvent::Null;
+        }
+    }
+    return ListEvent::Null;
+}
+
+bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
+    switch (listEvent) {
+        case ListEvent::Quit: //close program
+            return true;
+        case ListEvent::Back: {
+            // turn back if we are in a list
+            if(pad.getIndexListOpen() < pad.size())
+                pad.setIndexListOpen(pad.size()+1);
+            system("cls");
+            pad.showLists();
+            break;
+        }
+        case ListEvent::Open: {
+            if(pad.getIndexListOpen() > pad.size()) {
+                int indexL = -1;
+                while(indexL > pad.size() || indexL < 0) {
+                    std::cout << "Insert index of list to open: ";
+                    std::cin >> indexL;
+                }
+                pad.setIndexListOpen(indexL);
+            }
+            system("cls");
+            pad.showItems();
+            break;
+        }
+        case ListEvent::New: {
+            break;
+        }
+        case ListEvent::Remove: {
+            break;
+        }
+        case ListEvent::Null: {
+            std::cout << "Press: w,a,s,d,f or Q to quit." << std::endl;
+            break;
+        }
+    }
+    return false;
+}
+
 int main() {
     /*
     Item item1("Biscottti");
@@ -31,6 +98,7 @@ int main() {
     list1.changeTakenItem("Maniche");
     list1.show();
     */
+    /*
     ScratchPad lists;
     lists.addList("Spesa personale");
     lists.addList("Spesa casa");
@@ -40,6 +108,19 @@ int main() {
     lists.showLists();
     lists.removeList(2);
     lists.showLists();
+    */
+    ScratchPad lists;
+    lists.addList("Spesa casa");
+    lists.addList("Vestiti");
+    lists.showLists();
+    while(true){
+        ListEvent listEvent = getEvent();
+        bool quit = updateList(listEvent, lists);
+        if (quit)
+            return 0;
+
+    }
+
 
     return 0;
 }
