@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Item.h"
 #include "List.h"
+#include "ScratchPad.h"
 
 int main() {
     /*
@@ -13,7 +14,7 @@ int main() {
     item2.setQuantity(2);
     item2.show();
     */
-
+    /*
     List list1("Lista della spesa");
     list1.add("Fusilli",2);
     list1.add("Mezze maniche",2);
@@ -29,6 +30,16 @@ int main() {
     list1.add("Mezze maniche",4, true);
     list1.changeTakenItem("Maniche");
     list1.show();
+    */
+    ScratchPad lists;
+    lists.addList("Spesa personale");
+    lists.addList("Spesa casa");
+    lists.addList("Vestiti");
+    lists.showLists();
+    lists.removeList("Spesa casa");
+    lists.showLists();
+    lists.removeList(2);
+    lists.showLists();
 
     return 0;
 }

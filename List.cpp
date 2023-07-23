@@ -39,7 +39,7 @@ void List::remove(const std::string &name) {
     for(auto i : items){
         if(name == i->getName()) {
             items.remove(i);
-            std::cout << "Items removed successfully" << std::endl;
+            std::cout << "Item removed successfully" << std::endl;
             return;
         }
     }

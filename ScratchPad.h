@@ -5,13 +5,19 @@
 #ifndef SHOPPING_LIST_SCRATCHPAD_H
 #define SHOPPING_LIST_SCRATCHPAD_H
 
+#include <iostream>
 #include <vector>
 #include "List.h"
 
-class scratchPad {
+class ScratchPad {
 public:
-    scratchPad();
-    ~scratchPad();
+    ScratchPad();
+    ~ScratchPad();
+
+    void addList(const std::string& Name);
+    void removeList(const std::string& Name);
+    void removeList(int N);
+    void showLists() const;
 private:
     std::vector<List*> lists;
 };
