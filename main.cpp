@@ -49,6 +49,7 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
                 while(indexL > pad.size() || indexL < 0) {
                     std::cout << "Insert index of list to open: ";
                     std::cin >> indexL;
+                    std::cin.ignore(100, '\n');
                 }
                 pad.setIndexListOpen(indexL);
             }
@@ -57,13 +58,25 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             break;
         }
         case ListEvent::New: {
+            //new list
+            if(pad.getIndexListOpen() > pad.size()) {
+                pad.addList();
+                system("cls");
+                pad.showLists();
+            }
+            //new item
+            else if (pad.getIndexListOpen() < pad.size()){
+                pad.addItem();
+                system("cls");
+                pad.showItems();
+            }
             break;
         }
         case ListEvent::Remove: {
             break;
         }
         case ListEvent::Null: {
-            std::cout << "Press: w,a,s,d,f or Q to quit." << std::endl;
+            std::cout << "Press: (n)ew,(r)emove,(o)pen,(b)ack or Q to quit." << std::endl;
             break;
         }
     }

@@ -20,6 +20,19 @@ void List::setNameList(const std::string& NameList) {
     List::nameList = NameList;
 }
 
+const std::string &List::getNameItem(int Index) const {
+    if(Index > items.size() || Index < 0){
+        std::cout << "No items to this index" << std::endl;
+        return 0;
+    }
+    int j = 0;
+    for (auto i : items){
+        if(j == Index)
+            return i->getName();
+        j++;
+    }
+}
+
 void List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
@@ -93,4 +106,8 @@ void List::changeTakenItem(const std::string &name) {
 void List::show() {
     for(auto i : items)
         i->show();
+}
+
+int List::size() {
+    return items.size();
 }

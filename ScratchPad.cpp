@@ -13,7 +13,35 @@ ScratchPad::~ScratchPad() {
     lists.clear();
 }
 
-void ScratchPad::addList(const std::string& Name) {
+void ScratchPad::addList() {
+    bool find = true;
+    std::string Name;
+    while(find){
+        find = false;
+        std::cout << "Insert name of the new list : ";
+        std::getline(std::cin, Name);
+        for(auto i : lists)
+            if(Name == i->getNameList())
+                find = true;
+    }
+    lists.push_back(new List(Name));
+    indexListOpen = lists.size() + 1;
+}
+
+void ScratchPad::addList(const std::string &Name) {
+    bool find = false;
+    for(auto i : lists)
+        if(Name == i->getNameList())
+            find = true;
+    while(find){
+        std::string n;
+        find = false;
+        std::cout << "Name already taken. Insert name of the new list : ";
+        std::getline(std::cin, n);
+        for(auto i : lists)
+            if(n == i->getNameList())
+                find = true;
+    }
     lists.push_back(new List(Name));
     indexListOpen = lists.size() + 1;
 }
@@ -42,6 +70,32 @@ void ScratchPad::removeList(int Index) {
         return;
     }
     std::cout << "Invalid index" <<std::endl;
+}
+
+void ScratchPad::addItem() {
+    bool find = true;
+    std::string Name;
+    int Quantity;
+    bool Taken = false;
+    while(find){
+        find = false;
+        std::cout << "Insert name of the new item : ";
+        std::getline(std::cin, Name);
+        for(int i = 0; i < lists[indexListOpen]->size(); i++)
+            if(Name == lists[indexListOpen]->getNameItem(i))
+                find = true;
+    }
+    do{
+        std::cout << "Insert quantity of the new item : ";
+        std::cin >> Quantity;
+        std::cin.ignore(100, '\n');
+    }while(Quantity < 0);
+    do{
+        std::cout << "Has it been caught yet ? 0 - no, 1 - yes : ";
+        std::cin >> Taken;
+        std::cin.ignore(100, '\n');
+    }while(Taken!=0 && Taken!=1);
+    lists[indexListOpen]->add(Name, Quantity, Taken);
 }
 
 void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
