@@ -44,6 +44,22 @@ void ScratchPad::removeList(int Index) {
     std::cout << "Invalid index" <<std::endl;
 }
 
+void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
+    if(indexListOpen < lists.size()){
+        lists[indexListOpen]->add(Name, Quantity, Taken);
+        return;
+    }
+    std::cout << "List not selected" << std::endl;
+}
+
+void ScratchPad::removeItem(const std::string &Name) {
+    if(indexListOpen < lists.size()){
+        lists[indexListOpen]->remove(Name);
+        return;
+    }
+    std::cout << "List not selected" << std::endl;
+}
+
 void ScratchPad::showLists() const {
     int j = 0;
     for(auto i : lists){

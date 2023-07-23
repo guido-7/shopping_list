@@ -118,7 +118,6 @@ int main() {
         bool quit = updateList(listEvent, lists);
         if (quit)
             return 0;
-
     }
 
 

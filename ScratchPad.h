@@ -17,6 +17,8 @@ public:
     void addList(const std::string& Name);
     void removeList(const std::string& Name);
     void removeList(int N);
+    void addItem(const std::string& Name, int Quantity = 1, bool Taken = false);
+    void removeItem(const std::string& Name);
     void showLists() const;
     void showItems() const;
 
