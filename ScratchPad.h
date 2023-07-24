@@ -17,16 +17,18 @@ public:
 
     void addList();
     void addList(const std::string& Name);
+    void removeList();
+    void removeList(int Index);
     void removeList(const std::string& Name);
-    void removeList(int N);
     void addItem();
     void addItem(const std::string& Name, int Quantity = 1, bool Taken = false);
+    void removeItem();
     void removeItem(const std::string& Name);
     void showLists() const;
     void showItems() const;
 
     int getIndexListOpen() const;
-    void setIndexListOpen(int indexListOpen);
+    void setIndexListOpen(int IndexListOpen);
     int size();
 
 private:

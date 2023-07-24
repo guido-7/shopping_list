@@ -73,6 +73,18 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             break;
         }
         case ListEvent::Remove: {
+            //remove list
+            if(pad.getIndexListOpen() > pad.size()) {
+                pad.removeList();
+                system("cls");
+                pad.showLists();
+            }
+            //remove item
+            else if (pad.getIndexListOpen() < pad.size()){
+                pad.removeItem();
+                system("cls");
+                pad.showItems();
+            }
             break;
         }
         case ListEvent::Null: {

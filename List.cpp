@@ -23,7 +23,7 @@ void List::setNameList(const std::string& NameList) {
 const std::string &List::getNameItem(int Index) const {
     if(Index > items.size() || Index < 0){
         std::cout << "No items to this index" << std::endl;
-        return 0;
+        return ("No items to this index");
     }
     int j = 0;
     for (auto i : items){
@@ -104,8 +104,12 @@ void List::changeTakenItem(const std::string &name) {
 }
 
 void List::show() {
-    for(auto i : items)
+    int j = 1;
+    for(auto i : items){
+        std::cout << j << ")  ";
         i->show();
+        j++;
+    }
 }
 
 int List::size() {
