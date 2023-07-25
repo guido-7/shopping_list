@@ -46,12 +46,12 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
         case ListEvent::Open: {
             if(pad.getIndexListOpen() > pad.size()) {
                 int indexL = -1;
-                while(indexL > pad.size() || indexL < 0) {
+                while(indexL > pad.size() || indexL < 1) {
                     std::cout << "Insert index of list to open: ";
                     std::cin >> indexL;
                     std::cin.ignore(100, '\n');
                 }
-                pad.setIndexListOpen(indexL);
+                pad.setIndexListOpen((indexL-1));
             }
             system("cls");
             pad.showItems();
@@ -88,63 +88,42 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             break;
         }
         case ListEvent::Null: {
-            std::cout << "Press: (n)ew,(r)emove,(o)pen,(b)ack or Q to quit." << std::endl;
+            std::cout << "Not valid command. ";
             break;
         }
     }
     return false;
 }
 
+//render command user interface
+void rendereCUI(ScratchPad &pad) {
+    //Scratchpad
+    if(pad.getIndexListOpen() > pad.size())
+        std::cout << "Press: (n)ew,(r)emove,(o)pen or Q to quit." << std::endl;
+        //list
+    else
+        std::cout << "Press: (n)ew,(r)emove,(b)ack or Q to quit." << std::endl;
+}
+
 int main() {
-    /*
-    Item item1("Biscottti");
-    item1.show();
-    item1.setName("Biscotti");
-    item1.setQuantity(3);
-    item1.show();
-    Item item2(item1);
-    item2.setQuantity(2);
-    item2.show();
-    */
-    /*
-    List list1("Lista della spesa");
-    list1.add("Fusilli",2);
-    list1.add("Mezze maniche",2);
-    list1.add("Eliche",2);
-    list1.show();
-    list1.changeQuantityItem("Fusilli",1);
-    list1.changeNameItem("Fusilli","Maniche");
-    list1.show();
-    list1.changeQuantityItem("Fusilli",1);
-    list1.changeNameItem("Fusillli","Fusilli");
-    list1.remove("Mezze maniche");
-    list1.show();
-    list1.add("Mezze maniche",4, true);
-    list1.changeTakenItem("Maniche");
-    list1.show();
-    */
-    /*
-    ScratchPad lists;
-    lists.addList("Spesa personale");
-    lists.addList("Spesa casa");
-    lists.addList("Vestiti");
-    lists.showLists();
-    lists.removeList("Spesa casa");
-    lists.showLists();
-    lists.removeList(2);
-    lists.showLists();
-    */
     ScratchPad lists;
     lists.addList("Spesa casa");
     lists.addList("Vestiti");
+    lists.setIndexListOpen(0);
+    lists.addItem("pane");
+    lists.addItem("latte",2);
+    lists.addItem("marmellata",3,true);
+    lists.setIndexListOpen(lists.size()+1);
+
+    system("cls");
     lists.showLists();
+    rendereCUI(lists);
+
     while(true){
         ListEvent listEvent = getEvent();
         bool quit = updateList(listEvent, lists);
         if (quit)
             return 0;
+        rendereCUI(lists);
     }
-
-
-    return 0;
 }

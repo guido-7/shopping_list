@@ -48,8 +48,8 @@ void ScratchPad::addList(const std::string &Name) {
 
 void ScratchPad::removeList() {
     int indexL = -1;
-    while(indexL > lists.size() || indexL < 0) {
-        std::cout << "Insert index of list to open: ";
+    while(indexL > lists.size() || indexL < 1) {
+        std::cout << "Insert index of list to remove : ";
         std::cin >> indexL;
         std::cin.ignore(100, '\n');
     }
@@ -102,7 +102,7 @@ void ScratchPad::addItem() {
         std::cout << "Insert quantity of the new item : ";
         std::cin >> Quantity;
         std::cin.ignore(100, '\n');
-    }while(Quantity < 0);
+    }while(Quantity < 1);
     do{
         std::cout << "Has it been caught yet ? 0 - no, 1 - yes : ";
         std::cin >> Taken;
@@ -121,7 +121,7 @@ void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
 
 void ScratchPad::removeItem() {
     int indexI = -1;
-    while(indexI > lists[indexListOpen]->size() || indexI < 0) {
+    while(indexI > lists[indexListOpen]->size() || indexI < 1) {
         std::cout << "Insert index of item to remove : ";
         std::cin >> indexI;
         std::cin.ignore(100, '\n');
