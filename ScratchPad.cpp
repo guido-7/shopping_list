@@ -139,6 +139,18 @@ void ScratchPad::removeItem(const std::string &Name) {
     std::cout << "List not selected" << std::endl;
 }
 
+void ScratchPad::selectItem() {
+    int indexI = -1;
+    while(indexI > lists[indexListOpen]->size() || indexI < 1) {
+        std::cout << "Insert index of item to select : ";
+        std::cin >> indexI;
+        std::cin.ignore(100, '\n');
+    }
+    indexI--;
+    lists[indexListOpen]->changeTakenItem(lists[indexListOpen]->getNameItem(indexI));
+    std::cout << "Item removed successfully" << std::endl;
+}
+
 void ScratchPad::showLists() const {
     int j = 0;
     for(auto i : lists){

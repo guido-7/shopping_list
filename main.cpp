@@ -5,7 +5,7 @@
 
 // enum class
 enum class ListEvent {
-    Quit, Back, Open, New, Remove,Null
+    Quit, Back, Open, New, Remove, Select, Null
 };
 
 // poll event from keyboard
@@ -24,6 +24,8 @@ ListEvent getEvent() {
                 return ListEvent::New;
             case 'r':
                 return ListEvent::Remove;
+            case 's':
+                return ListEvent::Select;
             default:
                 return ListEvent::Null;
         }
@@ -87,6 +89,14 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             }
             break;
         }
+        case ListEvent::Select: {
+            // select or deselect a item if we are in a list
+            if(pad.getIndexListOpen() < pad.size())
+                pad.selectItem();
+            system("cls");
+            pad.showItems();
+            break;
+        }
         case ListEvent::Null: {
             std::cout << "Not valid command. ";
             break;
@@ -102,7 +112,7 @@ void rendereCUI(ScratchPad &pad) {
         std::cout << "Press: (n)ew,(r)emove,(o)pen or Q to quit." << std::endl;
         //list
     else
-        std::cout << "Press: (n)ew,(r)emove,(b)ack or Q to quit." << std::endl;
+        std::cout << "Press: (n)ew,(r)emove,(s)elect,(b)ack or Q to quit." << std::endl;
 }
 
 int main() {
