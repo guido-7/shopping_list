@@ -23,3 +23,13 @@ protected:
     std::stringstream buffer{};
     std::streambuf *sbuf;
 };
+
+TEST_F(ScratchPadSuite, TestFailRemoveList) {
+    std::string expected{"List not find\n"};
+    // Use cout as usual
+    c.addList("List1");
+    c.addList("List2");
+    c.removeList("List3");
+    std::string actual{buffer.str()};
+    EXPECT_EQ(expected, actual);
+}
