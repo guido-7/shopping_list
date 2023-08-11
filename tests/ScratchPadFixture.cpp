@@ -45,3 +45,18 @@ TEST_F(ScratchPadSuite, TestAddItem) {
     c.closeListOpen();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ScratchPadSuite, TestRemoveItem) {
+    std::string expected{"1)      | 1 | Item1\n"};
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    c.addItem("Item2");
+    c.removeItem("Item2");
+    buffer.str("");
+    buffer.clear();
+    c.showItems();
+    std::string actual{buffer.str()};
+    c.closeListOpen();
+    ASSERT_EQ(expected, actual);
+}
