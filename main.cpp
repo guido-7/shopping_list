@@ -123,7 +123,7 @@ int main() {
     lists.addItem("pane");
     lists.addItem("latte",2);
     lists.addItem("marmellata",3,true);
-    lists.setIndexListOpen(lists.size()+1);
+    lists.closeListOpen();
 
     system("cls");
     lists.showLists();
