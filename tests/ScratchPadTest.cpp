@@ -36,3 +36,21 @@ TEST(ScratchPad, TestRemoveList) {
     ASSERT_EQ(1, c.size());
     ASSERT_EQ(2, c.getIndexListOpen());
 }
+
+TEST(ScratchPad, TestAddItem) {
+    ScratchPad c;
+    c.addList("List1");
+    c.addItem("List1", 1);
+    ASSERT_EQ(1, c.size());
+    ASSERT_EQ(2, c.getIndexListOpen());
+    //cout List not selected
+    c.setIndexListOpen(0);
+    c.addItem("List1", 1);
+    c.closeListOpen();
+    c.addItem("List1", 2);
+    ASSERT_EQ(1, c.size());
+    ASSERT_EQ(2, c.getIndexListOpen());
+    c.addItem("List1", 3);
+    ASSERT_EQ(1, c.size());
+    ASSERT_EQ(2, c.getIndexListOpen());
+}
