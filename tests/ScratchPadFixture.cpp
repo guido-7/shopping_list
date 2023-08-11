@@ -60,3 +60,16 @@ TEST_F(ScratchPadSuite, TestRemoveItem) {
     c.closeListOpen();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ScratchPadSuite, TestFailRemoveItem) {
+    std::string expected{"Item not find\n"};
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    buffer.str("");
+    buffer.clear();
+    c.removeItem("Item2");
+    std::string actual{buffer.str()};
+    c.closeListOpen();
+    ASSERT_EQ(expected, actual);
+}
