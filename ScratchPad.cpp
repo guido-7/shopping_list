@@ -33,8 +33,8 @@ void ScratchPad::addList(const std::string &Name) {
     for(auto i : lists)
         if(Name == i->getNameList())
             find = true;
+    std::string n = Name;
     while(find){
-        std::string n;
         find = false;
         std::cout << "Name already taken. Insert name of the new list : ";
         std::getline(std::cin, n);
@@ -42,7 +42,7 @@ void ScratchPad::addList(const std::string &Name) {
             if(n == i->getNameList())
                 find = true;
     }
-    lists.push_back(new List(Name));
+    lists.push_back(new List(n));
     closeListOpen();
 }
 

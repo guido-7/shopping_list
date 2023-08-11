@@ -26,10 +26,22 @@ protected:
 
 TEST_F(ScratchPadSuite, TestFailRemoveList) {
     std::string expected{"List not find\n"};
-    // Use cout as usual
     c.addList("List1");
     c.addList("List2");
     c.removeList("List3");
     std::string actual{buffer.str()};
-    EXPECT_EQ(expected, actual);
+    ASSERT_EQ(expected, actual);
+}
+
+TEST_F(ScratchPadSuite, TestAddItem) {
+    std::string expected{"1)      | 1 | Item1\n"};
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    buffer.str("");
+    buffer.clear();
+    c.showItems();
+    std::string actual{buffer.str()};
+    c.closeListOpen();
+    ASSERT_EQ(expected, actual);
 }
