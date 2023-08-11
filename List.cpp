@@ -110,6 +110,8 @@ void List::show() {
         i->show();
         j++;
     }
+    if(j == 1)
+        std::cout << "No items in the list" <<std::endl;
 }
 
 int List::size() {
