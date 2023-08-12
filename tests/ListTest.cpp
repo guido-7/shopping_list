@@ -23,3 +23,14 @@ TEST(List, TestAddItem) {
     c.add("Item2");
     ASSERT_EQ(2, c.size());
 }
+
+TEST(List, TestRemoveItem) {
+    List c("List1");
+    c.add("Item1");
+    c.add("Item2");
+    c.add("Item3");
+    c.remove("Item2");
+    ASSERT_EQ(2, c.size());
+    c.remove("Item4");
+    ASSERT_EQ(2, c.size());
+}
