@@ -49,3 +49,14 @@ TEST_F(ListSuite, TestFailRemoveItem) {
     std::string actual{buffer.str()};
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestChangeQuantity) {
+    std::string expected{"1)      | 2 | Item1\n"};
+    c.add("Item1");
+    c.changeQuantityItem("Item1",2);
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.show();
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
