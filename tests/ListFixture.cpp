@@ -60,3 +60,19 @@ TEST_F(ListSuite, TestChangeQuantity) {
     std::string actual{buffer.str()};
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestFailChangeQuantity) {
+    std::string expected{"Quantity not updated. Item not find\n"};
+    c.add("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.changeQuantityItem("Item2",2);
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+    expected= "Quantity not updated. Quantity not valid\n";
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.changeQuantityItem("Item1",0);
+    actual = buffer.str();
+    ASSERT_EQ(expected, actual);
+}
