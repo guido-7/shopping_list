@@ -21,9 +21,10 @@ void List::setNameList(const std::string& NameList) {
 }
 
 const std::string &List::getNameItem(int Index) const {
-    if(Index > items.size() || Index < 0){
-        std::cout << "No items to this index" << std::endl;
-        return ("No items to this index");
+    while(Index > items.size() || Index < 0){
+        std::cout << "No items to this index. Insert valid index : ";
+        std::cin >> Index;
+        std::cin.ignore(100, '\n');
     }
     int j = 0;
     for (auto i : items){

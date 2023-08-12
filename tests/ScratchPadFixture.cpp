@@ -92,7 +92,7 @@ TEST_F(ScratchPadSuite, TestSelectItem) {
 }
 
 TEST_F(ScratchPadSuite, TestFailSelectItem) {
-    std::string expected{"Item not find\n"};
+    std::string expected{"Insert index of item to select : Insert index of item to select : Taken updated\nItem selected successfully\n"};
     std::stringstream input("3\n 1\n"); // simulate user input
     std::streambuf* originalCin = std::cin.rdbuf(input.rdbuf()); // redirect std::cin to input stringstream
     c.addList("List1");

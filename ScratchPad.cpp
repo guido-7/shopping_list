@@ -148,7 +148,7 @@ void ScratchPad::selectItem() {
     }
     indexI--;
     lists[indexListOpen]->changeTakenItem(lists[indexListOpen]->getNameItem(indexI));
-    std::cout << "Item removed successfully" << std::endl;
+    std::cout << "Item selected successfully" << std::endl;
 }
 
 void ScratchPad::showLists() const {
