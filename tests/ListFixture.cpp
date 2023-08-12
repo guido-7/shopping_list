@@ -39,3 +39,13 @@ TEST_F(ListSuite, TestFailAddItem) {
     actual = buffer.str();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestFailRemoveItem) {
+    std::string expected{"Item not find\n"};
+    c.add("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.remove("Item2");
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
