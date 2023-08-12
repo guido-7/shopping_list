@@ -73,3 +73,20 @@ TEST_F(ScratchPadSuite, TestFailRemoveItem) {
     c.closeListOpen();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ScratchPadSuite, TestSelectItem) {
+    std::string expected{"1)   X  | 1 | Item1\n"};
+    std::stringstream input("1\n"); // simulate user input
+    std::streambuf* originalCin = std::cin.rdbuf(input.rdbuf()); // redirect std::cin to input stringstream
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    c.selectItem();
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.showItems();
+    std::string actual{buffer.str()}; // get buffer content
+    c.closeListOpen();
+    ASSERT_EQ(expected, actual);
+    std::cin.rdbuf(originalCin);
+}
