@@ -5,7 +5,6 @@
 #include "../ScratchPad.h"
 
 class ScratchPadSuite : public ::testing::Test {
-
 protected:
     ScratchPadSuite() : sbuf{nullptr} {}
     ~ScratchPadSuite() override = default;
@@ -38,7 +37,7 @@ TEST_F(ScratchPadSuite, TestAddItem) {
     c.addList("List1");
     c.setIndexListOpen(0);
     c.addItem("Item1");
-    buffer.str("");
+    buffer.str(""); // clear buffer
     buffer.clear();
     c.showItems();
     std::string actual{buffer.str()};
