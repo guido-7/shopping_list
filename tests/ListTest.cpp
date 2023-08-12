@@ -15,3 +15,11 @@ TEST(List, TestSetNameList) {
     c.setNameList("List2");
     ASSERT_EQ("List2", c.getNameList());
 }
+
+TEST(List, TestAddItem) {
+    List c("List1");
+    c.add("Item1");
+    ASSERT_EQ(1, c.size());
+    c.add("Item2");
+    ASSERT_EQ(2, c.size());
+}
