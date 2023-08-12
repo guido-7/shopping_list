@@ -87,6 +87,22 @@ TEST_F(ScratchPadSuite, TestSelectItem) {
     c.showItems();
     std::string actual{buffer.str()}; // get buffer content
     c.closeListOpen();
-    ASSERT_EQ(expected, actual);
     std::cin.rdbuf(originalCin);
+    ASSERT_EQ(expected, actual);
+}
+
+TEST_F(ScratchPadSuite, TestFailSelectItem) {
+    std::string expected{"Item not find\n"};
+    std::stringstream input("3\n 1\n"); // simulate user input
+    std::streambuf* originalCin = std::cin.rdbuf(input.rdbuf()); // redirect std::cin to input stringstream
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.selectItem();
+    c.closeListOpen();
+    std::string actual{buffer.str()}; // get buffer content
+    std::cin.rdbuf(originalCin); // restore std::cin
+    ASSERT_EQ(expected, actual);
 }
