@@ -4,7 +4,6 @@
 #include "gtest/gtest.h"
 #include "../ScratchPad.h"
 
-
 TEST(ScratchPad, DefaultConstructor) {
     ScratchPad c;
     ASSERT_EQ(0, c.size());
