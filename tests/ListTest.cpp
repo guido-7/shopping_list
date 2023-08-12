@@ -22,6 +22,8 @@ TEST(List, TestAddItem) {
     ASSERT_EQ(1, c.size());
     c.add("Item2");
     ASSERT_EQ(2, c.size());
+    c.add("Item2");
+    ASSERT_EQ(2, c.size());
 }
 
 TEST(List, TestRemoveItem) {
