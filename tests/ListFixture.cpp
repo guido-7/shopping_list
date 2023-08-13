@@ -31,10 +31,9 @@ TEST_F(ListSuite, TestFailAddItem) {
     c.add("Item2",0);
     std::string actual{buffer.str()};
     ASSERT_EQ(expected, actual);
-
+    expected = "Name already used\n";
     buffer.str(""); // clear buffer
     buffer.clear();
-    expected = "Name already used\n";
     c.add("Item1");
     actual = buffer.str();
     ASSERT_EQ(expected, actual);
@@ -85,5 +84,22 @@ TEST_F(ListSuite, TestChangeNameItem) {
     buffer.clear();
     c.show();
     std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
+
+TEST_F(ListSuite, TestFailChangeNameItem) {
+    std::string expected{"Name not updated. Item not find\n"};
+    c.add("Item1");
+    c.add("Item2");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.changeNameItem("Item3","Item4");
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+    expected= "Name not updated. Name already used\n";
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.changeNameItem("Item1","Item2");
+    actual = buffer.str();
     ASSERT_EQ(expected, actual);
 }
