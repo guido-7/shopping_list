@@ -107,7 +107,7 @@ void List::changeTakenItem(const std::string &name) {
             return;
         }
     }
-    std::cout << "Item not find" <<std::endl;
+    std::cout << "Taken not updated. Item not find" <<std::endl;
 }
 
 void List::show() {

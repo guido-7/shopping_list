@@ -128,3 +128,13 @@ TEST_F(ListSuite, TestChangeTaken) {
     actual = buffer.str();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestFailChangeTaken) {
+    std::string expected{"Taken not updated. Item not find\n"};
+    c.add("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.changeTakenItem("Item2");
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
