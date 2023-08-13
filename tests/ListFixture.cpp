@@ -103,3 +103,28 @@ TEST_F(ListSuite, TestFailChangeNameItem) {
     actual = buffer.str();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestChangeTaken) {
+    std::string expected{"1)   X  | 1 | Item1\n"};
+    c.add("Item1");
+    c.changeTakenItem("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.show();
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+    expected = "1)      | 1 | Item1\n";
+    c.changeTakenItem("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.show();
+    actual = buffer.str();
+    ASSERT_EQ(expected, actual);
+    expected = "1)      | 1 | Item1\n2)   X  | 1 | Item2\n";
+    c.add("Item2",1,true);
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.show();
+    actual = buffer.str();
+    ASSERT_EQ(expected, actual);
+}
