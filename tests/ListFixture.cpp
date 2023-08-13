@@ -76,3 +76,14 @@ TEST_F(ListSuite, TestFailChangeQuantity) {
     actual = buffer.str();
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ListSuite, TestChangeNameItem) {
+    std::string expected{"1)      | 1 | Item2\n"};
+    c.add("Item1");
+    c.changeNameItem("Item1","Item2");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.show();
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
