@@ -76,12 +76,18 @@ void List::changeQuantityItem(const std::string& name, int quantity) {
 }
 
 void List::changeNameItem(const std::string& oldName, const std::string& newName) {
-    if(oldName == newName){
-        std::cout << "Name updated" <<std::endl;
-        return;
-    }
     for(auto i : items){
-        if(oldName == i->getName()){
+        if(oldName == i->getName() && oldName == newName){
+            std::cout << "Name updated" <<std::endl;
+            return;
+        }
+        else if(oldName == i->getName()){
+            for(auto j : items){
+                if(newName == j->getName()){
+                    std::cout << "Name not updated. Name already used" <<std::endl;
+                    return;
+                }
+            }
             i->setName(newName);
             std::cout << "Name updated" <<std::endl;
             return;
