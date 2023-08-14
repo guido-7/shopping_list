@@ -27,3 +27,9 @@ TEST(Item, TestAssignmentOperator) {
     ASSERT_EQ(i.getQuantity(), j.getQuantity());
     ASSERT_EQ(i.isTaken(), j.isTaken());
 }
+
+TEST(Item, TestSetName) {
+    Item i("Item1");
+    i.setName("Item2");
+    ASSERT_EQ("Item2", i.getName());
+}
