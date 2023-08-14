@@ -33,3 +33,15 @@ TEST(Item, TestSetName) {
     i.setName("Item2");
     ASSERT_EQ("Item2", i.getName());
 }
+
+TEST(Item, TestSetQuantity) {
+    Item i("Item1");
+    i.setQuantity(2);
+    ASSERT_EQ(2, i.getQuantity());
+}
+
+TEST(Item, TestSetTaken) {
+    Item i("Item1");
+    i.setTaken(true);
+    ASSERT_TRUE(i.isTaken());
+}
