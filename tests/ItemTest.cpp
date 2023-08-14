@@ -18,3 +18,12 @@ TEST(Item, TestCopyConstructor) {
     ASSERT_EQ(i.getQuantity(), j.getQuantity());
     ASSERT_EQ(i.isTaken(), j.isTaken());
 }
+
+TEST(Item, TestAssignmentOperator) {
+    Item i("Item1", 2, true);
+    Item j("Item2");
+    j = i;
+    ASSERT_EQ(i.getName(), j.getName());
+    ASSERT_EQ(i.getQuantity(), j.getQuantity());
+    ASSERT_EQ(i.isTaken(), j.isTaken());
+}
