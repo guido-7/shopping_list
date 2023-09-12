@@ -105,3 +105,14 @@ TEST_F(ScratchPadSuite, TestFailSelectItem) {
     std::cin.rdbuf(originalCin); // restore std::cin
     ASSERT_EQ(expected, actual);
 }
+
+TEST_F(ScratchPadSuite, TestShowLists) {
+    std::string expected{"1) List1\n2) List2\n"};
+    c.addList("List1");
+    c.addList("List2");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.showLists();
+    std::string actual{buffer.str()};
+    ASSERT_EQ(expected, actual);
+}
