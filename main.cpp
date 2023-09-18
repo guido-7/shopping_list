@@ -33,19 +33,25 @@ ListEvent getEvent() {
     return ListEvent::Null;
 }
 
+void clearOutput() {
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+}
+
 bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
     switch (listEvent) {
-        case ListEvent::Quit: //close program
+        case ListEvent::Quit:
+            //close program
             return true;
         case ListEvent::Back: {
             // turn back if we are in a list
             if(pad.getIndexListOpen() < pad.size())
                 pad.setIndexListOpen(pad.size()+1);
-            system("cls");
+            clearOutput();
             pad.showLists();
             break;
         }
         case ListEvent::Open: {
+            //open a list
             if(pad.getIndexListOpen() > pad.size()) {
                 int indexL = -1;
                 while(indexL > pad.size() || indexL < 1) {
@@ -55,7 +61,7 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
                 }
                 pad.setIndexListOpen((indexL-1));
             }
-            system("cls");
+            clearOutput();
             pad.showItems();
             break;
         }
@@ -63,13 +69,13 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             //new list
             if(pad.getIndexListOpen() > pad.size()) {
                 pad.addList();
-                system("cls");
+                clearOutput();
                 pad.showLists();
             }
             //new item
             else if (pad.getIndexListOpen() < pad.size()){
                 pad.addItem();
-                system("cls");
+                clearOutput();
                 pad.showItems();
             }
             break;
@@ -78,22 +84,22 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
             //remove list
             if(pad.getIndexListOpen() > pad.size()) {
                 pad.removeList();
-                system("cls");
+                clearOutput();
                 pad.showLists();
             }
             //remove item
             else if (pad.getIndexListOpen() < pad.size()){
                 pad.removeItem();
-                system("cls");
+                clearOutput();
                 pad.showItems();
             }
             break;
         }
         case ListEvent::Select: {
-            // select or deselect a item if we are in a list
+            // select or deselect an item if we are in a list
             if(pad.getIndexListOpen() < pad.size())
                 pad.selectItem();
-            system("cls");
+            clearOutput();
             pad.showItems();
             break;
         }
@@ -106,11 +112,11 @@ bool updateList(const ListEvent &listEvent, ScratchPad &pad) {
 }
 
 //render command user interface
-void rendereCUI(ScratchPad &pad) {
+void renderCUI(ScratchPad &pad) {
     //Scratchpad
     if(pad.getIndexListOpen() > pad.size())
         std::cout << "Press: (n)ew,(r)emove,(o)pen or Q to quit." << std::endl;
-        //list
+    //list
     else
         std::cout << "Press: (n)ew,(r)emove,(s)elect,(b)ack or Q to quit." << std::endl;
 }
@@ -125,15 +131,15 @@ int main() {
     lists.addItem("marmellata",3,true);
     lists.closeListOpen();
 
-    system("cls");
+    clearOutput();
     lists.showLists();
-    rendereCUI(lists);
+    renderCUI(lists);
 
     while(true){
         ListEvent listEvent = getEvent();
         bool quit = updateList(listEvent, lists);
         if (quit)
             return 0;
-        rendereCUI(lists);
+        renderCUI(lists);
     }
 }
