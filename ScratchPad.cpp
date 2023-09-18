@@ -86,29 +86,7 @@ void ScratchPad::removeList(int Index) {
 }
 
 void ScratchPad::addItem() {
-    bool find = true;
-    std::string Name;
-    int Quantity;
-    bool Taken = false;
-    while(find){
-        find = false;
-        std::cout << "Insert name of the new item : ";
-        std::getline(std::cin, Name);
-        for(int i = 0; i < lists[indexListOpen]->size(); i++)
-            if(Name == lists[indexListOpen]->getNameItem(i))
-                find = true;
-    }
-    do{
-        std::cout << "Insert quantity of the new item : ";
-        std::cin >> Quantity;
-        std::cin.ignore(100, '\n');
-    }while(Quantity < 1);
-    do{
-        std::cout << "Has it been caught yet ? 0 - no, 1 - yes : ";
-        std::cin >> Taken;
-        std::cin.ignore(100, '\n');
-    }while(Taken!=0 && Taken!=1);
-    lists[indexListOpen]->add(Name, Quantity, Taken);
+    lists[indexListOpen]->add();
 }
 
 void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
@@ -120,6 +98,8 @@ void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
 }
 
 void ScratchPad::removeItem() {
+    lists[indexListOpen]->remove();
+    /*
     int indexI = -1;
     while(indexI > lists[indexListOpen]->size() || indexI < 1) {
         std::cout << "Insert index of item to remove : ";
@@ -129,6 +109,7 @@ void ScratchPad::removeItem() {
     indexI--;
     lists[indexListOpen]->remove(lists[indexListOpen]->getNameItem(indexI));
     std::cout << "Item removed successfully" << std::endl;
+     */
 }
 
 void ScratchPad::removeItem(const std::string &Name) {
@@ -160,6 +141,7 @@ void ScratchPad::showLists() const {
 }
 
 void ScratchPad::showItems() const {
+    std::cout << "------" << lists[indexListOpen]->getNameList() << " ( " << lists[indexListOpen]->getItemToBuy() << " ) " << "------" << std::endl;
     if(indexListOpen < lists.size()){
         lists[indexListOpen]->show();
         return;
