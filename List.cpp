@@ -6,6 +6,7 @@
 
 List::List(const std::string& name) : nameList(name) {
     items.clear();
+    itemToBuy = 0;
 }
 
 List::~List() {
@@ -34,6 +35,50 @@ const std::string &List::getNameItem(int Index) const {
     }
 }
 
+const int List::getItemToBuy() const {
+    return itemToBuy;
+}
+
+void List::add() {
+    bool find = false;
+    std::string name;
+    int quantity;
+    bool taken = false;
+    int j = 0;
+    do{
+        find = false;
+        if(j > 0)
+            std::cout << "Name already used. ";
+        std::cout << "Insert name of the new item : ";
+        std::getline(std::cin, name);
+        int i = 0;
+        while(i < items.size() && !find){
+            if(name == getNameItem(i))
+                find = true;
+            i++;
+        }
+        j=1;
+    }while(find);
+    j = 0;
+    do{
+        if(j > 0)
+            std::cout << "Quantity not valid. ";
+        std::cout << "Insert quantity of the new item : ";
+        std::cin >> quantity;
+        std::cin.ignore(100, '\n');
+        j=1;
+    }while(quantity < 1);
+    do{
+        std::cout << "Has it been caught yet ? 0 - no, 1 - yes : ";
+        std::cin >> taken;
+        std::cin.ignore(100, '\n');
+    }while(taken!=0 && taken!=1);
+    items.push_back(new Item(name, quantity, taken));
+    std::cout << "Item added successfully" <<std::endl;
+    if(!taken)
+        itemToBuy++;
+}
+
 void List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
@@ -47,11 +92,36 @@ void List::add(const std::string& name, int quantity, bool taken) {
     }
     items.push_back(new Item(name, quantity, taken));
     std::cout << "Item added successfully" <<std::endl;
+    if(!taken)
+        itemToBuy++;
+}
+
+void List::remove() {
+    int indexItem = -1;
+    while(indexItem > items.size() || indexItem < 1) {
+        std::cout << "Insert index of item to remove : ";
+        std::cin >> indexItem;
+        std::cin.ignore(100, '\n');
+    }
+    indexItem--;
+    std::string name = getNameItem(indexItem);
+    for(auto i : items){
+        if(name == i->getName()) {
+            if(!i->isTaken())
+                itemToBuy--;
+            items.remove(i);
+            std::cout << "Item removed successfully" << std::endl;
+            return;
+        }
+    }
+    std::cout << "Item not removed" << std::endl;
 }
 
 void List::remove(const std::string &name) {
     for(auto i : items){
         if(name == i->getName()) {
+            if(!i->isTaken())
+                itemToBuy--;
             items.remove(i);
             std::cout << "Item removed successfully" << std::endl;
             return;
@@ -99,10 +169,14 @@ void List::changeNameItem(const std::string& oldName, const std::string& newName
 void List::changeTakenItem(const std::string &name) {
     for(auto i : items){
         if(name == i->getName()){
-            if(i->isTaken())
+            if(i->isTaken()){
                 i->setTaken(false);
-            else
+                itemToBuy++;
+            }
+            else{
                 i->setTaken(true);
+                itemToBuy--;
+            }
             std::cout << "Taken updated" <<std::endl;
             return;
         }

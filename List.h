@@ -17,8 +17,11 @@ public:
     const std::string &getNameList() const;
     void setNameList(const std::string& NameList);
     const std::string &getNameItem(int Index) const;
+    const int getItemToBuy() const;
 
+    void add();
     void add(const std::string& name, int quantity = 1, bool taken = false);
+    void remove();
     void remove(const std::string& name);
     void changeQuantityItem(const std::string& name, int quantity);
     void changeNameItem(const std::string& oldName, const std::string& newName);
@@ -29,6 +32,7 @@ public:
 private:
     std::list<Item*> items;
     std::string nameList;
+    int itemToBuy;
 };
 
 
