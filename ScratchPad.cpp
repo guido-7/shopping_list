@@ -122,6 +122,10 @@ void ScratchPad::removeItem(const std::string &Name) {
 }
 
 void ScratchPad::selectItem() {
+    if(lists[indexListOpen]->size() == 0){
+        std::cout << "Not item to select" << std::endl;
+        return;
+    }
     int indexI = -1;
     while(indexI > lists[indexListOpen]->size() || indexI < 1) {
         std::cout << "Insert index of item to select : ";

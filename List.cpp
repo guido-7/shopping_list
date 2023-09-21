@@ -94,6 +94,10 @@ void List::add(const std::string& name, int quantity, bool taken) {
 }
 
 void List::remove() {
+    if(items.empty()){
+        std::cout << "Not item to remove" << std::endl;
+        return;
+    }
     int indexItem = -1;
     while(indexItem > items.size() || indexItem < 1) {
         std::cout << "Insert index of item to remove : ";
