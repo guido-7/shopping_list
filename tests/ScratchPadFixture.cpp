@@ -33,7 +33,7 @@ TEST_F(ScratchPadSuite, TestFailRemoveList) {
 }
 
 TEST_F(ScratchPadSuite, TestAddItem) {
-    std::string expected{"------List1------\n1)      | 1 | Item1\n"};
+    std::string expected{"------List1 ( 1 ) ------\n1)      | 1 | Item1\n"};
     c.addList("List1");
     c.setIndexListOpen(0);
     c.addItem("Item1");
@@ -46,7 +46,7 @@ TEST_F(ScratchPadSuite, TestAddItem) {
 }
 
 TEST_F(ScratchPadSuite, TestRemoveItem) {
-    std::string expected{"------List1------\n1)      | 1 | Item1\n"};
+    std::string expected{"------List1 ( 1 ) ------\n1)      | 1 | Item1\n"};
     c.addList("List1");
     c.setIndexListOpen(0);
     c.addItem("Item1");
@@ -74,7 +74,7 @@ TEST_F(ScratchPadSuite, TestFailRemoveItem) {
 }
 
 TEST_F(ScratchPadSuite, TestSelectItem) {
-    std::string expected{"------List1------\n1)   X  | 1 | Item1\n"};
+    std::string expected{"------List1 ( 0 ) ------\n1)   X  | 1 | Item1\n"};
     std::stringstream input("1\n"); // simulate user input
     std::streambuf* originalCin = std::cin.rdbuf(input.rdbuf()); // redirect std::cin to input stringstream
     c.addList("List1");
@@ -118,7 +118,7 @@ TEST_F(ScratchPadSuite, TestShowLists) {
 }
 
 TEST_F(ScratchPadSuite, TestShowItems) {
-    std::string expected{"------List1------\n1)      | 1 | Item1\n"};
+    std::string expected{"------List1 ( 1 ) ------\n1)      | 1 | Item1\n"};
     c.addList("List1");
     c.setIndexListOpen(0);
     c.addItem("Item1");

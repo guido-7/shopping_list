@@ -99,17 +99,6 @@ void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
 
 void ScratchPad::removeItem() {
     lists[indexListOpen]->remove();
-    /*
-    int indexI = -1;
-    while(indexI > lists[indexListOpen]->size() || indexI < 1) {
-        std::cout << "Insert index of item to remove : ";
-        std::cin >> indexI;
-        std::cin.ignore(100, '\n');
-    }
-    indexI--;
-    lists[indexListOpen]->remove(lists[indexListOpen]->getNameItem(indexI));
-    std::cout << "Item removed successfully" << std::endl;
-     */
 }
 
 void ScratchPad::removeItem(const std::string &Name) {

@@ -6,11 +6,13 @@
 #define SHOPPING_LIST_ITEM_H
 
 #include <iostream>
+#include <list>
+#include "Subject.h"
 
-class Item {
+class Item : public Subject {
 public:
-    explicit Item(const std::string& Name, int Quantity = 1, bool Taken = false);
-    ~Item();
+    explicit Item(Observer *o, const std::string& Name, int Quantity = 1, bool Taken = false);
+    virtual ~Item();
 
     //copy constructor and assignment operator
     Item(const Item& original);
@@ -26,10 +28,16 @@ public:
 
     //print all variables
     void show();
+
+    //observer
+    virtual void subscribe(Observer* o) override;
+    virtual void unsubscribe(Observer* o) override;
+    virtual void notify(int x) override;
 private:
     std::string name;
     int quantity;
     bool taken;
+    std::list<Observer*> observers;
 };
 
 #endif //SHOPPING_LIST_ITEM_H

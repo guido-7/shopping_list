@@ -11,6 +11,7 @@ List::List(const std::string& name) : nameList(name) {
 
 List::~List() {
     items.clear();
+    //detach();
 }
 
 const std::string &List::getNameList() const {
@@ -73,10 +74,8 @@ void List::add() {
         std::cin >> taken;
         std::cin.ignore(100, '\n');
     }while(taken!=0 && taken!=1);
-    items.push_back(new Item(name, quantity, taken));
+    items.push_back(new Item(this, name, quantity, taken));
     std::cout << "Item added successfully" <<std::endl;
-    if(!taken)
-        itemToBuy++;
 }
 
 void List::add(const std::string& name, int quantity, bool taken) {
@@ -90,10 +89,8 @@ void List::add(const std::string& name, int quantity, bool taken) {
             return;
         }
     }
-    items.push_back(new Item(name, quantity, taken));
+    items.push_back(new Item(this, name, quantity, taken));
     std::cout << "Item added successfully" <<std::endl;
-    if(!taken)
-        itemToBuy++;
 }
 
 void List::remove() {
@@ -107,8 +104,7 @@ void List::remove() {
     std::string name = getNameItem(indexItem);
     for(auto i : items){
         if(name == i->getName()) {
-            if(!i->isTaken())
-                itemToBuy--;
+            i->~Item();
             items.remove(i);
             std::cout << "Item removed successfully" << std::endl;
             return;
@@ -120,8 +116,7 @@ void List::remove() {
 void List::remove(const std::string &name) {
     for(auto i : items){
         if(name == i->getName()) {
-            if(!i->isTaken())
-                itemToBuy--;
+            i->~Item();
             items.remove(i);
             std::cout << "Item removed successfully" << std::endl;
             return;
@@ -171,11 +166,9 @@ void List::changeTakenItem(const std::string &name) {
         if(name == i->getName()){
             if(i->isTaken()){
                 i->setTaken(false);
-                itemToBuy++;
             }
             else{
                 i->setTaken(true);
-                itemToBuy--;
             }
             std::cout << "Taken updated" <<std::endl;
             return;
@@ -197,4 +190,8 @@ void List::show() {
 
 int List::size() {
     return items.size();
+}
+
+void List::update(int x) {
+    itemToBuy += x;
 }

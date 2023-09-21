@@ -4,14 +4,30 @@
 
 #include "Item.h"
 
-Item::Item(const std::string& Name, int Quantity, bool Taken) : name(Name), quantity(Quantity), taken(Taken) {}
+Item::Item(Observer *o, const std::string& Name, int Quantity, bool Taken) : name(Name), quantity(Quantity), taken(Taken) {
+    Item::subscribe(o);
+    if(taken)
+        Item::notify(0);
+    else
+        Item::notify(1);
+}
 
-Item::~Item() {}
+Item::~Item() {
+    if(taken)
+        Item::notify(0);
+    else
+        Item::notify(-1);
+    observers.clear();
+}
 
 Item::Item(const Item &original) {
     name = original.name;
     quantity = original.quantity;
     taken = original.taken;
+    if(taken)
+        Item::notify(0);
+    else
+        Item::notify(1);
 }
 
 Item &Item::operator=(const Item &right) {
@@ -44,7 +60,18 @@ void Item::setQuantity(int Quantity) {
 }
 
 void Item::setTaken(bool Taken) {
-    Item::taken = Taken;
+    if(Item::taken == Taken)
+        return;
+    else if(Taken){
+        Item::taken = Taken;
+        Item::notify(-1);
+        return;
+    }
+    else {
+        Item::taken = Taken;
+        Item::notify(1);
+        return;
+    }
 }
 
 void Item::show() {
@@ -53,4 +80,17 @@ void Item::show() {
     else
         std::cout << "   ";
     std::cout << " | "  << quantity << " | " << name << std::endl;
+}
+
+void Item::subscribe(Observer *o) {
+    observers.push_back(o);
+}
+
+void Item::unsubscribe(Observer *o) {
+    observers.remove(o);
+}
+
+void Item::notify(int x) {
+    for(auto i : observers)
+        i->update(x);
 }

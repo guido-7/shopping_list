@@ -9,10 +9,10 @@
 #include <list>
 #include "Item.h"
 
-class List {
+class List : public Observer {
 public:
     List(const std::string& name);
-    ~List();
+    virtual ~List();
 
     const std::string &getNameList() const;
     void setNameList(const std::string& NameList);
@@ -29,6 +29,8 @@ public:
     void show();
     int size();
 
+    //observer
+    virtual void update(int x) override;
 private:
     std::list<Item*> items;
     std::string nameList;
