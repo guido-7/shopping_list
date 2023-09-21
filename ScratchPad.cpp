@@ -47,6 +47,10 @@ void ScratchPad::addList(const std::string &Name) {
 }
 
 void ScratchPad::removeList() {
+    if(lists.empty()){
+        std::cout << "Not list to remove" << std::endl;
+        return;
+    }
     int indexL = -1;
     while(indexL > lists.size() || indexL < 1) {
         std::cout << "Insert index of list to remove : ";
@@ -60,6 +64,10 @@ void ScratchPad::removeList() {
 }
 
 void ScratchPad::removeList(const std::string &Name) {
+    if(lists.empty()){
+        std::cout << "Not list to remove" << std::endl;
+        return;
+    }
     int j = 0;
     for(auto i : lists){
         if(Name == i->getNameList()){
@@ -75,6 +83,10 @@ void ScratchPad::removeList(const std::string &Name) {
 }
 
 void ScratchPad::removeList(int Index) {
+    if(lists.empty()){
+        std::cout << "Not list to remove" << std::endl;
+        return;
+    }
     Index--;
     if(Index > 0 && Index < lists.size()) {
         lists.erase(lists.begin() + Index);
