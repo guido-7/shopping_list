@@ -9,11 +9,12 @@
 #include <vector>
 #include <string>
 #include "List.h"
+#include "Observer.h"
 
-class ScratchPad {
+class ScratchPad : public Observer {
 public:
     ScratchPad();
-    ~ScratchPad();
+    virtual ~ScratchPad();
 
     void addList();
     void addList(const std::string& Name);
@@ -33,8 +34,13 @@ public:
     void closeListOpen();
     int size();
 
+    //observer
+    virtual void update(const std::string& name) override;
+    virtual void attach(int i) override;
+    virtual void detach(int i) override;
+
 private:
-    std::vector<List*> lists;
+    std::vector<std::shared_ptr<List>> lists;
     int indexListOpen;
 };
 

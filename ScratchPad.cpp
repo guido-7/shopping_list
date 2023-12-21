@@ -20,29 +20,34 @@ void ScratchPad::addList() {
         find = false;
         std::cout << "Insert name of the new list : ";
         std::getline(std::cin, Name);
-        for(auto i : lists)
-            if(Name == i->getNameList())
+        for (auto& ptr : lists) {
+            if(Name == ptr->getNameList())
                 find = true;
+        }
     }
-    lists.push_back(new List(Name));
+    lists.push_back(std::make_shared<List>(Name));
+    ScratchPad::attach(lists.size());
     closeListOpen();
 }
 
 void ScratchPad::addList(const std::string &Name) {
     bool find = false;
-    for(auto i : lists)
-        if(Name == i->getNameList())
+    for (auto& ptr : lists) {
+        if(Name == ptr->getNameList())
             find = true;
+    }
     std::string n = Name;
     while(find){
         find = false;
         std::cout << "Name already taken. Insert name of the new list : ";
         std::getline(std::cin, n);
-        for(auto i : lists)
-            if(n == i->getNameList())
+        for (auto& ptr : lists) {
+            if(Name == ptr->getNameList())
                 find = true;
+        }
     }
-    lists.push_back(new List(n));
+    lists.push_back(std::make_shared<List>(n));
+    ScratchPad::attach(lists.size());
     closeListOpen();
 }
 
@@ -58,6 +63,7 @@ void ScratchPad::removeList() {
         std::cin.ignore(100, '\n');
     }
     indexL--;
+    ScratchPad::detach(indexL);
     lists.erase(lists.begin() + indexL);
     std::cout << "List removed successfully" << std::endl;
     closeListOpen();
@@ -69,8 +75,9 @@ void ScratchPad::removeList(const std::string &Name) {
         return;
     }
     int j = 0;
-    for(auto i : lists){
-        if(Name == i->getNameList()){
+    for (auto& ptr : lists) {
+        if(Name == ptr->getNameList()){
+            ScratchPad::detach(j);
             lists.erase(lists.begin() + j);
             std::cout << "List removed successfully" << std::endl;
             closeListOpen();
@@ -89,6 +96,7 @@ void ScratchPad::removeList(int Index) {
     }
     Index--;
     if(Index > 0 && Index < lists.size()) {
+        ScratchPad::detach(Index);
         lists.erase(lists.begin() + Index);
         std::cout << "List removed successfully" << std::endl;
         closeListOpen();
@@ -98,7 +106,41 @@ void ScratchPad::removeList(int Index) {
 }
 
 void ScratchPad::addItem() {
-    lists[indexListOpen]->add();
+    bool find = false;
+    std::string Name;
+    int Quantity;
+    bool Taken = false;
+    int j = 0;
+    do{
+        find = false;
+        if(j > 0)
+            std::cout << "Name already used. ";
+        std::cout << "Insert name of the new item : ";
+        std::getline(std::cin, Name);
+        int i = 0;
+        while(i < lists[indexListOpen]->size() && !find){
+            if(Name == lists[indexListOpen]->getNameItem(i))
+                find = true;
+            i++;
+        }
+        j=1;
+    }while(find);
+    j = 0;
+    do{
+        if(j > 0)
+            std::cout << "Quantity not valid. ";
+        std::cout << "Insert quantity of the new item : ";
+        std::cin >> Quantity;
+        std::cin.ignore(100, '\n');
+        j=1;
+    }while(Quantity < 1);
+    do{
+        std::cout << "Has it been caught yet ? 0 - no, 1 - yes : ";
+        std::cin >> Taken;
+        std::cin.ignore(100, '\n');
+    }while(Taken!=0 && Taken!=1);
+    lists[indexListOpen]->add(Name, Quantity, Taken);
+    std::cout << "Item added successfully" <<std::endl;
 }
 
 void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
@@ -110,7 +152,19 @@ void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
 }
 
 void ScratchPad::removeItem() {
-    lists[indexListOpen]->remove();
+    if(lists[indexListOpen]->size() == 0){
+        std::cout << "Not item to remove" << std::endl;
+        return;
+    }
+    int indexItem = -1;
+    while(indexItem > lists[indexListOpen]->size() || indexItem < 1) {
+        std::cout << "Insert index of item to remove : ";
+        std::cin >> indexItem;
+        std::cin.ignore(100, '\n');
+    }
+    indexItem--;
+    std::string name = lists[indexListOpen]->getNameItem(indexItem);
+    lists[indexListOpen]->remove(name);
 }
 
 void ScratchPad::removeItem(const std::string &Name) {
@@ -139,9 +193,9 @@ void ScratchPad::selectItem() {
 
 void ScratchPad::showLists() const {
     int j = 0;
-    for(auto i : lists){
+    for (auto& ptr : lists) {
         j++;
-        std::cout << j << ") " << i->getNameList() << std::endl;
+        std::cout << j << ") " << ptr->getNameList() << std::endl;
     }
 }
 
@@ -168,4 +222,23 @@ void ScratchPad::closeListOpen() {
 
 int ScratchPad::size() {
     return lists.size();
+}
+
+void ScratchPad::update(const std::string& name) {
+   int i = 0;
+    for (auto& ptr : lists) {
+        if(ptr->getNameList() == name && i == indexListOpen)
+            showItems();
+        i++;
+    }
+}
+
+void ScratchPad::attach(int i) {
+    if(i >= 0 && i < lists.size())
+        lists[i]->subscribe( this );
+}
+
+void ScratchPad::detach(int i) {
+    if(i >= 0 && i < lists.size())
+        lists[i]->unsubscribe( this );
 }

@@ -6,10 +6,12 @@
 #define SHOPPING_LIST_LIST_H
 
 #include <iostream>
+#include <memory>
 #include <list>
 #include "Item.h"
+#include "Subject.h"
 
-class List : public Observer {
+class List : public Subject{
 public:
     List(const std::string& name);
     virtual ~List();
@@ -19,9 +21,7 @@ public:
     const std::string &getNameItem(int Index) const;
     const int getItemToBuy() const;
 
-    void add();
     void add(const std::string& name, int quantity = 1, bool taken = false);
-    void remove();
     void remove(const std::string& name);
     void changeQuantityItem(const std::string& name, int quantity);
     void changeNameItem(const std::string& oldName, const std::string& newName);
@@ -29,12 +29,15 @@ public:
     void show();
     int size();
 
-    //observer
-    virtual void update(int x) override;
+    //Subject
+    virtual void subscribe(Observer* o) override;
+    virtual void unsubscribe(Observer* o) override;
+    virtual void notify() override;
 private:
-    std::list<Item*> items;
+    std::list<std::unique_ptr<Item>> items;
     std::string nameList;
     int itemToBuy;
+    std::list<Observer*> observers;
 };
 
 

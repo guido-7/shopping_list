@@ -4,30 +4,19 @@
 
 #include "Item.h"
 
-Item::Item(Observer *o, const std::string& Name, int Quantity, bool Taken) : name(Name), quantity(Quantity), taken(Taken) {
-    Item::subscribe(o);
-    if(taken)
-        Item::notify(0);
-    else
-        Item::notify(1);
+Item::Item(const std::string& Name, int Quantity, bool Taken) : name(Name), quantity(Quantity), taken(Taken) {
+    if (Quantity < 1){
+        std::cout << "Quantity not valid. Changed to 1" << std::endl;
+        Quantity = 1;
+    }
 }
 
-Item::~Item() {
-    if(taken)
-        Item::notify(0);
-    else
-        Item::notify(-1);
-    observers.clear();
-}
+Item::~Item() {}
 
 Item::Item(const Item &original) {
     name = original.name;
     quantity = original.quantity;
     taken = original.taken;
-    if(taken)
-        Item::notify(0);
-    else
-        Item::notify(1);
 }
 
 Item &Item::operator=(const Item &right) {
@@ -56,7 +45,12 @@ void Item::setName(const std::string& Name) {
 }
 
 void Item::setQuantity(int Quantity) {
-    Item::quantity = Quantity;
+    if(Quantity < 1){
+        std::cout << "Quantity not valid" << std::endl;
+    }
+    else {
+        Item::quantity = Quantity;
+    }
 }
 
 void Item::setTaken(bool Taken) {
@@ -64,33 +58,19 @@ void Item::setTaken(bool Taken) {
         return;
     else if(Taken){
         Item::taken = Taken;
-        Item::notify(-1);
         return;
     }
     else {
         Item::taken = Taken;
-        Item::notify(1);
         return;
     }
 }
 
-void Item::show() {
+std::string Item::toString() {
+    std::string s;
     if(taken)
-        std::cout << " X ";
+        s = " X  | " + std::to_string(quantity) + " | " + name;
     else
-        std::cout << "   ";
-    std::cout << " | "  << quantity << " | " << name << std::endl;
-}
-
-void Item::subscribe(Observer *o) {
-    observers.push_back(o);
-}
-
-void Item::unsubscribe(Observer *o) {
-    observers.remove(o);
-}
-
-void Item::notify(int x) {
-    for(auto i : observers)
-        i->update(x);
+        s = "    | " + std::to_string(quantity) + " | " + name;
+    return s;
 }
