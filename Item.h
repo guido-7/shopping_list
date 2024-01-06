@@ -25,7 +25,7 @@ public:
     void setQuantity(int Quantity);
     void setTaken(bool taken);
 
-    std::string toString();
+    std::string toString() const;
 private:
     std::string name;
     int quantity;

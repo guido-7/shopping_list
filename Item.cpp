@@ -66,7 +66,7 @@ void Item::setTaken(bool Taken) {
     }
 }
 
-std::string Item::toString() {
+std::string Item::toString() const {
     std::string s;
     if(taken)
         s = " X  | " + std::to_string(quantity) + " | " + name;
