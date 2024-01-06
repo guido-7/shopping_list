@@ -22,10 +22,9 @@ void List::setNameList(const std::string& NameList) {
 }
 
 const std::string &List::getNameItem(int Index) const {
-    while(Index > items.size() || Index < 0){
+    if(Index > items.size() || Index < 0) {
         std::cout << "No items to this index. Insert valid index : ";
-        std::cin >> Index;
-        std::cin.ignore(100, '\n');
+        return NULL;
     }
     int j = 0;
     for (auto& ptr : items) {
@@ -33,21 +32,22 @@ const std::string &List::getNameItem(int Index) const {
             return ptr->getName();
         j++;
     }
+    return NULL;
 }
 
 const int List::getItemToBuy() const {
     return itemToBuy;
 }
 
-void List::add(const std::string& name, int quantity, bool taken) {
+bool List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
-        return;
+        return 1;
     }
     for (auto& ptr : items) {
         if(name == ptr->getName()) {
             std::cout << "Name already used" << std::endl;
-            return;
+            return 1;
         }
     }
     items.push_back(std::make_unique<Item>(name, quantity, taken));
@@ -55,61 +55,70 @@ void List::add(const std::string& name, int quantity, bool taken) {
         itemToBuy++;
     std::cout << "Item added successfully" <<std::endl;
     notify();
+    return 0;
 }
 
-void List::remove(const std::string &name) {
+bool List::remove(const std::string &name) {
     for (auto& ptr : items) {
         if(name == ptr->getName()) {
             if (!ptr->isTaken())
                 itemToBuy--;
             items.remove(ptr);
             std::cout << "Item removed successfully" << std::endl;
-            return;
+            notify();
+            return 0;
         }
     }
     std::cout << "Item not find" <<std::endl;
-    notify();
+    return 1;
 }
 
-void List::changeQuantityItem(const std::string& name, int quantity) {
+bool List::changeQuantityItem(const std::string& name, int quantity) {
     if(quantity < 1){
         std::cout << "Quantity not updated. Quantity not valid" <<std::endl;
-        return;
+        notify();
+        return 1;
     }
     for (auto& ptr : items) {
         if (name == ptr->getName()) {
             ptr->setQuantity(quantity);
             std::cout << "Quantity updated" << std::endl;
-            return;
+            notify();
+            return 0;
         }
     }
     std::cout << "Quantity not updated. Item not find" <<std::endl;
     notify();
+    return 1;
 }
 
-void List::changeNameItem(const std::string& oldName, const std::string& newName) {
+bool List::changeNameItem(const std::string& oldName, const std::string& newName) {
     for (auto& ptr : items) {
         if(oldName == ptr->getName() && oldName == newName){
             std::cout << "Name updated" <<std::endl;
-            return;
+            notify();
+            return 0;
         }
         else if(oldName == ptr->getName()){
             for (auto& ptr_newName : items) {
                 if(newName == ptr_newName->getName()){
                     std::cout << "Name not updated. Name already used" <<std::endl;
-                    return;
+                    notify();
+                    return 1;
                 }
             }
             ptr->setName(newName);
             std::cout << "Name updated" <<std::endl;
-            return;
+            notify();
+            return 0;
         }
     }
     std::cout << "Name not updated. Item not find" <<std::endl;
     notify();
+    return 1;
 }
 
-void List::changeTakenItem(const std::string &name) {
+bool List::changeTakenItem(const std::string &name) {
     for (auto& ptr : items) {
         if(name == ptr->getName()){
             if(ptr->isTaken()){
@@ -121,11 +130,13 @@ void List::changeTakenItem(const std::string &name) {
                 itemToBuy--;
             }
             std::cout << "Taken updated" <<std::endl;
-            return;
+            notify();
+            return 0;
         }
     }
     std::cout << "Taken not updated. Item not find" <<std::endl;
     notify();
+    return 1;
 }
 
 void List::show() {

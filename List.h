@@ -21,11 +21,11 @@ public:
     const std::string &getNameItem(int Index) const;
     const int getItemToBuy() const;
 
-    void add(const std::string& name, int quantity = 1, bool taken = false);
-    void remove(const std::string& name);
-    void changeQuantityItem(const std::string& name, int quantity);
-    void changeNameItem(const std::string& oldName, const std::string& newName);
-    void changeTakenItem(const std::string& name);
+    bool add(const std::string& name, int quantity = 1, bool taken = false);
+    bool remove(const std::string& name);
+    bool changeQuantityItem(const std::string& name, int quantity);
+    bool changeNameItem(const std::string& oldName, const std::string& newName);
+    bool changeTakenItem(const std::string& name);
     void show();
     int size();
 
