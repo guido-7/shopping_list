@@ -45,6 +45,19 @@ TEST_F(ScratchPadSuite, TestAddItem) {
     ASSERT_EQ(expected, actual);
 }
 
+TEST_F(ScratchPadSuite, TestFailAddItem) {
+    std::string expected{"Name already used\nSomething was wrong\n"};
+    c.addList("List1");
+    c.setIndexListOpen(0);
+    c.addItem("Item1");
+    buffer.str(""); // clear buffer
+    buffer.clear();
+    c.addItem("Item1");
+    std::string actual{buffer.str()};
+    c.closeListOpen();
+    ASSERT_EQ(expected, actual);
+}
+
 TEST_F(ScratchPadSuite, TestRemoveItem) {
     std::string expected{"------List1 ( 1 ) ------\n1)      | 1 | Item1\n"};
     c.addList("List1");
@@ -61,7 +74,7 @@ TEST_F(ScratchPadSuite, TestRemoveItem) {
 }
 
 TEST_F(ScratchPadSuite, TestFailRemoveItem) {
-    std::string expected{"Item not find\n"};
+    std::string expected{"Item not find\nSomething was wrong\n"};
     c.addList("List1");
     c.setIndexListOpen(0);
     c.addItem("Item1");

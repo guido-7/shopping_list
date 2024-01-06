@@ -26,6 +26,18 @@ TEST(List, TestAddItem) {
     ASSERT_EQ(2, c.size());
 }
 
+TEST(List, TestAddItem2) {
+    List c("List1");
+    bool v = c.add("Item1");
+    ASSERT_EQ(false, v);
+}
+
+TEST(List, TestFailAddItem) {
+    List c("List1");
+    bool v = c.add("Item1", 0);
+    ASSERT_EQ(true, v);
+}
+
 TEST(List, TestRemoveItem) {
     List c("List1");
     c.add("Item1");
