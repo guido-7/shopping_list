@@ -22,9 +22,10 @@ void List::setNameList(const std::string& NameList) {
 }
 
 const std::string &List::getNameItem(int Index) const {
+    std::string s;
     if(Index > items.size() || Index < 0) {
         std::cout << "No items to this index. Insert valid index : ";
-        return NULL;
+        return s;
     }
     int j = 0;
     for (auto& ptr : items) {
@@ -32,7 +33,7 @@ const std::string &List::getNameItem(int Index) const {
             return ptr->getName();
         j++;
     }
-    return NULL;
+    return s;
 }
 
 const int List::getItemToBuy() const {
@@ -42,12 +43,12 @@ const int List::getItemToBuy() const {
 bool List::add(const std::string& name, int quantity, bool taken) {
     if(quantity < 1){
         std::cout << "Quantity not valid" <<std::endl;
-        return 1;
+        return false;
     }
     for (auto& ptr : items) {
         if(name == ptr->getName()) {
             std::cout << "Name already used" << std::endl;
-            return 1;
+            return false;
         }
     }
     items.push_back(std::make_unique<Item>(name, quantity, taken));
@@ -55,7 +56,7 @@ bool List::add(const std::string& name, int quantity, bool taken) {
         itemToBuy++;
     std::cout << "Item added successfully" <<std::endl;
     notify();
-    return 0;
+    return true;
 }
 
 bool List::remove(const std::string &name) {
@@ -66,30 +67,30 @@ bool List::remove(const std::string &name) {
             items.remove(ptr);
             std::cout << "Item removed successfully" << std::endl;
             notify();
-            return 0;
+            return true;
         }
     }
     std::cout << "Item not find" <<std::endl;
-    return 1;
+    return false;
 }
 
 bool List::changeQuantityItem(const std::string& name, int quantity) {
     if(quantity < 1){
         std::cout << "Quantity not updated. Quantity not valid" <<std::endl;
         notify();
-        return 1;
+        return false;
     }
     for (auto& ptr : items) {
         if (name == ptr->getName()) {
             ptr->setQuantity(quantity);
             std::cout << "Quantity updated" << std::endl;
             notify();
-            return 0;
+            return true;
         }
     }
     std::cout << "Quantity not updated. Item not find" <<std::endl;
     notify();
-    return 1;
+    return false;
 }
 
 bool List::changeNameItem(const std::string& oldName, const std::string& newName) {
@@ -97,25 +98,25 @@ bool List::changeNameItem(const std::string& oldName, const std::string& newName
         if(oldName == ptr->getName() && oldName == newName){
             std::cout << "Name updated" <<std::endl;
             notify();
-            return 0;
+            return true;
         }
         else if(oldName == ptr->getName()){
             for (auto& ptr_newName : items) {
                 if(newName == ptr_newName->getName()){
                     std::cout << "Name not updated. Name already used" <<std::endl;
                     notify();
-                    return 1;
+                    return false;
                 }
             }
             ptr->setName(newName);
             std::cout << "Name updated" <<std::endl;
             notify();
-            return 0;
+            return true;
         }
     }
     std::cout << "Name not updated. Item not find" <<std::endl;
     notify();
-    return 1;
+    return false;
 }
 
 bool List::changeTakenItem(const std::string &name) {
@@ -131,15 +132,15 @@ bool List::changeTakenItem(const std::string &name) {
             }
             std::cout << "Taken updated" <<std::endl;
             notify();
-            return 0;
+            return true;
         }
     }
     std::cout << "Taken not updated. Item not find" <<std::endl;
     notify();
-    return 1;
+    return false;
 }
 
-void List::show() {
+void List::show() const {
     int j = 1;
     for (auto& ptr : items) {
         std::cout << j << ")  ";
@@ -150,7 +151,7 @@ void List::show() {
         std::cout << "No items in the list" <<std::endl;
 }
 
-int List::size() {
+int List::size() const {
     return items.size();
 }
 

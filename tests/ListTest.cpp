@@ -29,13 +29,13 @@ TEST(List, TestAddItem) {
 TEST(List, TestAddItem2) {
     List c("List1");
     bool v = c.add("Item1");
-    ASSERT_EQ(false, v);
+    ASSERT_EQ(true, v);
 }
 
 TEST(List, TestFailAddItem) {
     List c("List1");
     bool v = c.add("Item1", 0);
-    ASSERT_EQ(true, v);
+    ASSERT_EQ(false, v);
 }
 
 TEST(List, TestRemoveItem) {

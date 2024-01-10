@@ -26,8 +26,8 @@ public:
     bool changeQuantityItem(const std::string& name, int quantity);
     bool changeNameItem(const std::string& oldName, const std::string& newName);
     bool changeTakenItem(const std::string& name);
-    void show();
-    int size();
+    void show() const;
+    int size() const;
 
     //Subject
     virtual void subscribe(Observer* o) override;
