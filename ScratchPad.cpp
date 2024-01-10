@@ -151,7 +151,7 @@ void ScratchPad::addItem(const std::string &Name, int Quantity, bool Taken) {
         std::cout << "List not selected" << std::endl;
         return;
     }
-    if(s != 0)
+    if(!s)
         std::cout << "Something was wrong" << std::endl;
 }
 
@@ -169,7 +169,7 @@ void ScratchPad::removeItem() {
     indexItem--;
     std::string name = lists[indexListOpen]->getNameItem(indexItem);
     bool s = lists[indexListOpen]->remove(name);
-    if (s != 0)
+    if (!s)
         std::cout << "Something was wrong" << std::endl;
 }
 
@@ -179,7 +179,7 @@ void ScratchPad::removeItem(const std::string &Name) {
         s = lists[indexListOpen]->remove(Name);
     else
         std::cout << "List not selected" << std::endl;
-    if (s != 0)
+    if (!s)
         std::cout << "Something was wrong" << std::endl;
 }
 
@@ -228,7 +228,7 @@ void ScratchPad::closeListOpen() {
     ScratchPad::indexListOpen = lists.size() + 1;
 }
 
-int ScratchPad::size() {
+int ScratchPad::size() const {
     return lists.size();
 }
 

@@ -32,7 +32,7 @@ public:
     int getIndexListOpen() const;
     void setIndexListOpen(int IndexListOpen);
     void closeListOpen();
-    int size();
+    int size() const;
 
     //observer
     virtual void update(const std::string& name) override;
